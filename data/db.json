@@ -1,6 +1,11 @@
 {
     "items": [{
-        "id": 1,
-        "item": "Yam"
-    }]
+            "id": 1,
+            "item": "Yam"
+        },
+        {
+            "id": 2,
+            "item": "Eggs"
+        }
+    ]
 }
