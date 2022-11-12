@@ -15,7 +15,7 @@ body {
 }
 
 main {
-  @apply w-[600px] text-center rounded-md bg-white min-h-[25vh] px-7 py-5 trans-all-linear;
+  @apply w-[550px] text-center rounded-md bg-white min-h-[23vh] px-7 py-5 trans-all-linear;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
@@ -32,7 +32,7 @@ input {
 }
 
 .btn {
-  @apply w-fit px-2 py-0.5 text-pry-clr-1 capitalize rounded-tr-lg rounded-br-lg bg-pry-clr-3 h-full tracking-wider trans-all-linear;
+  @apply w-fit px-2 py-1 text-pry-clr-1 capitalize rounded-tr-lg rounded-br-lg bg-pry-clr-3 h-full tracking-wider trans-all-linear;
 }
 
 .btn:hover {
