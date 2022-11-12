@@ -15,12 +15,17 @@ body {
 }
 
 main {
-  @apply w-[550px] text-center rounded-md bg-white min-h-[23vh] px-7 py-5 trans-all-linear;
+  @apply w-[550px] text-center rounded-md bg-white min-h-[23vh] px-7 pt-5 pb-2 trans-all-linear;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+h1,
+button {
+  @apply capitalize tracking-wider;
+}
+
 h1 {
-  @apply capitalize text-xl text-pry-clr-1 font-semibold;
+  @apply text-xl text-pry-clr-1 font-semibold;
 }
 
 form {
@@ -32,9 +37,51 @@ input {
 }
 
 .btn {
-  @apply w-fit px-2 py-1 text-pry-clr-1 capitalize rounded-tr-lg rounded-br-lg bg-pry-clr-3 h-full tracking-wider trans-all-linear;
+  @apply w-fit px-2 py-1 text-pry-clr-1 rounded-tr-lg rounded-br-lg bg-pry-clr-3 h-full trans-all-linear;
 }
 
 .btn:hover {
   @apply bg-pry-clr-4 text-white;
+}
+
+.items {
+  @apply my-5 flex flex-col gap-5;
+}
+
+.item {
+  @apply w-full flex justify-between trans-all-linear px-3 py-0.5 rounded-md;
+}
+
+.item:hover {
+  @apply bg-pry-clr-0;
+}
+
+p {
+  @apply text-pry-clr-2 capitalize;
+}
+
+.btn-container {
+  @apply flex gap-3 text-[1rem];
+}
+
+.edit-btn {
+  @apply text-pry-clr-8 trans-all-linear;
+}
+
+.edit-btn:hover {
+  @apply text-pry-clr-9;
+}
+
+.delete-btn,
+.trash-btn {
+  @apply text-pry-clr-6 trans-all-linear;
+}
+
+.delete-btn:hover,
+.trash-btn:hover {
+  @apply text-pry-clr-7;
+}
+
+.trash-btn {
+  @apply mt-3;
 }
