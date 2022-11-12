@@ -4,10 +4,12 @@ const Context = createContext({})
 
 export const DataProvider = ({ children }) => {
     const url = "http://localhost:3500/items"
+
     const inputEl = useRef()
     const [item, setItem] = useState("")
     const [items, setItems] = useState([])
     const [fetchErr, setFetchErr] = useState(null)
+    const [isEditing, setIsEditing] = useState(false)
 
     const fetchItems = async () => {
         try {
@@ -27,7 +29,8 @@ export const DataProvider = ({ children }) => {
     return (
         <Context.Provider value={{
             inputEl, item, setItem,
-            items, setItems
+            items, setItems, isEditing,
+            setIsEditing
         }}>
             {children}
         </Context.Provider>
