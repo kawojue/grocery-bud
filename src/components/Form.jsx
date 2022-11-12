@@ -2,13 +2,13 @@ import Context from './Context'
 import { useContext } from 'react'
 
 const Form = () => {
-    const { inputEl } = useContext(Context)
+    const { inputEl, isEditing } = useContext(Context)
 
     return (
         <form>
             <input type="text" placeholder="e.g. bread" className="add-item-input" ref={inputEl} />
             <button className="btn">
-                submit
+                {`${isEditing ? 'edit' : 'submit'}`}
             </button>
         </form>
     )
