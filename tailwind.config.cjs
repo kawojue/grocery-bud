@@ -16,6 +16,12 @@ module.exports = {
         'pry-clr-6': '#bb2525',
         'pry-clr-6': '#6be675',
         'pry-clr-7': '#25bb32',
+      },
+      screens: {
+        sm: "600px",
+        md: "800px",
+        lg: "1200px",
+        xl: "1440px"
       }
     },
   },
