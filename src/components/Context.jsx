@@ -8,18 +8,37 @@ export const DataProvider = ({ children }) => {
     const inputEl = useRef()
     const [item, setItem] = useState("")
     const [items, setItems] = useState([])
-    const [fetchErr, setFetchErr] = useState(null)
+    const [msg, setMsg] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
 
     const fetchItems = async () => {
         try {
-            setFetchErr(null)
+            setMsg(null)
             const res = await fetch(url)
             const data = await res.json()
             setItems(data)
         } catch (err) {
-            setFetchErr("Please, reload the page or check your connection.")
+            setMsg("Please, reload the page or check your connection.")
         }
+    }
+
+    const fetchItem = async (id) => {
+        try {
+            const res = await fetch(`${url}/${id}`)
+            const data = await res.json()
+            return data
+        } catch (err) {
+            setMsg("Item does not exist.")
+        }
+    }
+
+    const deleteItem = async id => {
+        const newItems = items.filter(item => item.id !== id)
+        setItems(newItems)
+
+        await fetch(`${url}/${id}`, {
+            method: 'DELETE'
+        })
     }
 
     useEffect(() => {
@@ -30,7 +49,7 @@ export const DataProvider = ({ children }) => {
         <Context.Provider value={{
             inputEl, item, setItem,
             items, setItems, isEditing,
-            setIsEditing
+            setIsEditing, msg
         }}>
             {children}
         </Context.Provider>
