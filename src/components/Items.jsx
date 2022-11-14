@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { FaTrash, FaEdit } from 'react-icons/fa'
 
 const Items = () => {
-    const { items } = useContext(Context)
+    const { items, deleteItem, clearItems } = useContext(Context)
 
     return (
         <section className="items">
@@ -14,13 +14,13 @@ const Items = () => {
                         <button className="edit-btn">
                             <FaEdit />
                         </button>
-                        <button className="delete-btn">
+                        <button className="delete-btn" onClick={() => deleteItem(item.id)}>
                             <FaTrash />
                         </button>
                     </div>
                 </article>
             ))}
-            <button className="trash-btn">
+            <button className="trash-btn" onClick={() => clearItems()}>
                 clear items
             </button>
         </section>
