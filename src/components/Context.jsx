@@ -1,3 +1,4 @@
+// import manageState from '../manageState'
 import { createContext, useEffect, useState, useRef } from 'react'
 
 const Context = createContext({})
@@ -8,17 +9,17 @@ export const DataProvider = ({ children }) => {
     const inputEl = useRef()
     const [item, setItem] = useState("")
     const [items, setItems] = useState([])
-    const [msg, setMsg] = useState(null)
+    const [msg, setMsg] = useState({})
     const [isEditing, setIsEditing] = useState(false)
 
     const fetchItems = async () => {
         try {
-            setMsg(null)
+            setMsg({})
             const res = await fetch(url)
             const data = await res.json()
             setItems(data)
         } catch (err) {
-            setMsg("Please, reload the page or check your connection.")
+            setMsg({})
         }
     }
 
@@ -28,7 +29,7 @@ export const DataProvider = ({ children }) => {
             const data = await res.json()
             return data
         } catch (err) {
-            setMsg("Item does not exist.")
+            setMsg({})
         }
     }
 
@@ -41,6 +42,15 @@ export const DataProvider = ({ children }) => {
         })
     }
 
+    const clearItems = () => {
+        const IDS = items.map(item => item.id)
+        IDS.forEach(async id =>
+            await fetch(`${url}/${id}`, {
+                method: 'DELETE',
+            }))
+        setItems([])
+    }
+
     useEffect(() => {
         (async () => await fetchItems())()
     }, [])
@@ -49,7 +59,8 @@ export const DataProvider = ({ children }) => {
         <Context.Provider value={{
             inputEl, item, setItem,
             items, setItems, isEditing,
-            setIsEditing, msg
+            setIsEditing, msg, deleteItem,
+            clearItems
         }}>
             {children}
         </Context.Provider>
