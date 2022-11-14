@@ -29,16 +29,6 @@ export const DataProvider = ({ children }) => {
         (async () => await fetchItems())()
     }, [])
 
-    const fetchItem = async id => {
-        try {
-            const res = await fetch(`${url}/${id}`)
-            const data = await res.json()
-            return data
-        } catch (err) {
-            setMsg({})
-        }
-    }
-
     const deleteItem = async id => {
         const newItems = items.filter(item => item.id !== id)
         setItems(newItems)
@@ -81,10 +71,21 @@ export const DataProvider = ({ children }) => {
             setItems(newItems)
             setName("")
         }
-        const newItem = { id: getNewID, name }
-        setItems([newItem, ...items])
 
-        // Default states
+        if (!isEditing) {
+            const newItem = { id: getNewID, name }
+            setItems([newItem, ...items])
+
+            await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newItem)
+            })
+        }
+
+        // Set Default states
         setName("")
         setIsEditing(false)
         setID(null)
