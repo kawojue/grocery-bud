@@ -69,7 +69,14 @@ export const DataProvider = ({ children }) => {
             getItem[0].name = name
             const newItems = items.map(item => item.id === ID ? getItem[0] : item)
             setItems(newItems)
-            setName("")
+
+            await fetch(`${url}/${ID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(getItem[0])
+            })
         }
 
         if (!isEditing) {
