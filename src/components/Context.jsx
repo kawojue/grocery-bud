@@ -1,4 +1,4 @@
-// import manageState from '../manageState'
+import manageAlert from '../manageAlert'
 import { createContext, useEffect, useState, useRef } from 'react'
 
 const Context = createContext({})
@@ -6,6 +6,8 @@ const Context = createContext({})
 export const DataProvider = ({ children }) => {
     const url = "http://localhost:3500/items"
 
+
+    // Initialize default states
     const inputEl = useRef()
     const [name, setName] = useState("")
     const [items, setItems] = useState([])
@@ -13,6 +15,7 @@ export const DataProvider = ({ children }) => {
     const [ID, setID] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
 
+    // fetch Items from the server.
     const fetchItems = async () => {
         try {
             setMsg({})
@@ -25,34 +28,39 @@ export const DataProvider = ({ children }) => {
         }
     }
 
+    // fetch items once the page loads.
     useEffect(() => {
         (async () => await fetchItems())()
     }, [])
 
+    // Delete individual item.
     const deleteItem = async id => {
         const newItems = items.filter(item => item.id !== id)
         setItems(newItems)
         setIsEditing(false)
         setName("")
 
+        // from server
         await fetch(`${url}/${id}`, {
             method: 'DELETE'
         })
     }
 
+    // Delete all items
     const clearItems = () => {
-        setIsEditing(false)
         setName("")
+        setIsEditing(false)
 
-        const IDS = items.map(item => item.id)
+        const IDS = items.map(item => item.id) // fetch all items id to list
         IDS.forEach(async id =>
+            // from server
             await fetch(`${url}/${id}`, {
                 method: 'DELETE',
             }))
 
         setItems([])
     }
-
+    // get individual item information to edit
     const editItem = async id => {
         setIsEditing(true)
         const getItem = items.filter(item => item.id === id)
@@ -65,11 +73,15 @@ export const DataProvider = ({ children }) => {
         const getNewID = new Date().getTime()
         const getItem = items.filter(item => item.id === ID)
 
+        const formatName = name.toLowerCase()
+
         if (isEditing) {
-            getItem[0].name = name
+            getItem[0].name = formatName
+            // update edited item
             const newItems = items.map(item => item.id === ID ? getItem[0] : item)
             setItems(newItems)
 
+            // in server
             await fetch(`${url}/${ID}`, {
                 method: 'PUT',
                 headers: {
@@ -80,9 +92,10 @@ export const DataProvider = ({ children }) => {
         }
 
         if (!isEditing) {
-            const newItem = { id: getNewID, name }
+            const newItem = { id: getNewID, name } // add item
             setItems([newItem, ...items])
 
+            // to server
             await fetch(url, {
                 method: 'POST',
                 headers: {
