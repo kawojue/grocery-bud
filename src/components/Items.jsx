@@ -10,7 +10,7 @@ const Items = () => {
         <section className="items">
             {items.map(item => (
                 <article key={item.id} className="item">
-                    <p>{item.name}</p>
+                    <p className="item-title">{item.name}</p>
                     <div className="btn-container">
                         <button className="edit-btn" onClick={() => editItem(item.id)}>
                             <FaEdit />
