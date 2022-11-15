@@ -1,4 +1,3 @@
-import manageAlert from '../manageAlert'
 import { createContext, useEffect, useState, useRef } from 'react'
 
 const Context = createContext({})
@@ -11,20 +10,23 @@ export const DataProvider = ({ children }) => {
     const inputEl = useRef()
     const [name, setName] = useState("")
     const [items, setItems] = useState([])
-    const [msg, setMsg] = useState({})
     const [ID, setID] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
+    const [alert, setAlert] = useState({ msg: '', show: false, action: '' })
+
+    const showAlert = (show = false, action = '', msg = '') => {
+        setAlert({ show, action, msg })
+    }
 
     // fetch Items from the server.
     const fetchItems = async () => {
         try {
-            setMsg({})
             setIsEditing(false)
             const res = await fetch(url)
             const data = await res.json()
             setItems(data)
         } catch (err) {
-            setMsg({})
+            showAlert(true, 'error', 'Please, reload the page')
         }
     }
 
@@ -44,6 +46,8 @@ export const DataProvider = ({ children }) => {
         await fetch(`${url}/${id}`, {
             method: 'DELETE'
         })
+
+        showAlert(true, 'delete', 'Item removed')
     }
 
     // Delete all items
@@ -59,6 +63,8 @@ export const DataProvider = ({ children }) => {
             }))
 
         setItems([])
+
+        showAlert(true, 'clear', 'Items cleared')
     }
     // get individual item information to edit
     const editItem = async id => {
@@ -70,10 +76,9 @@ export const DataProvider = ({ children }) => {
 
     const addItem = async e => {
         e.preventDefault()
+        const formatName = name.toLowerCase()
         const getNewID = new Date().getTime()
         const getItem = items.filter(item => item.id === ID)
-
-        const formatName = name.toLowerCase()
 
         if (isEditing) {
             getItem[0].name = formatName
@@ -89,10 +94,12 @@ export const DataProvider = ({ children }) => {
                 },
                 body: JSON.stringify(getItem[0])
             })
+
+            showAlert(true, 'edit', 'value changed')
         }
 
         if (!isEditing) {
-            const newItem = { id: getNewID, name } // add item
+            const newItem = { id: getNewID, name: formatName } // add item
             setItems([newItem, ...items])
 
             // to server
@@ -103,6 +110,8 @@ export const DataProvider = ({ children }) => {
                 },
                 body: JSON.stringify(newItem)
             })
+
+            showAlert(true, 'add', 'value changed')
         }
 
         // Set Default states
@@ -116,8 +125,9 @@ export const DataProvider = ({ children }) => {
         <Context.Provider value={{
             inputEl, name, setName,
             items, setItems, isEditing,
-            setIsEditing, msg, deleteItem,
-            clearItems, editItem, addItem
+            clearItems, editItem, addItem,
+            setIsEditing, deleteItem, alert,
+            showAlert
         }}>
             {children}
         </Context.Provider>
