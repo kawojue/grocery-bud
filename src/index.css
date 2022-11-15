@@ -56,7 +56,7 @@ input {
   @apply bg-pry-clr-0;
 }
 
-p {
+.item-title {
   @apply text-pry-clr-2 capitalize;
 }
 
@@ -84,4 +84,29 @@ p {
 
 .trash-btn {
   @apply mt-3;
+}
+
+.alert {
+  @apply text-sm mb-3 text-white rounded-md py-0.5;
+}
+
+.alert.delete {
+  @apply bg-pry-clr-6;
+}
+
+.alert.clear,
+.alert.error {
+  @apply bg-pry-clr-7;
+}
+
+.alert.add {
+  @apply bg-pry-clr-9;
+}
+
+.alert.edit {
+  @apply bg-pry-clr-8;
+}
+
+.alert.warning {
+  @apply bg-pry-clr-5 text-pry-clr-0
 }
