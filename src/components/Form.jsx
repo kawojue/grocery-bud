@@ -8,7 +8,7 @@ const Form = () => {
         <form onSubmit={e => addItem(e)}>
             <input type="text" placeholder="e.g. bread"
                 className="add-item-input" ref={inputEl} value={name}
-                onChange={(e) => setName(e.target.value)} autoFocus />
+                onChange={(e) => setName(e.target.value)} autoFocus required />
             <button className="btn">
                 {`${isEditing ? 'edit' : 'submit'}`}
             </button>
