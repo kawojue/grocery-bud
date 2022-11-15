@@ -9,7 +9,7 @@ const ManageAlert = ({
     useEffect(() => {
         const visibilityNone = setTimeout(() => {
             remAlert()
-        }, 1500)
+        }, 1532)
 
         return () => {
             clearTimeout(visibilityNone)
@@ -17,7 +17,7 @@ const ManageAlert = ({
     }, [list])
 
     return (
-        <p className={`alert alert-${action}`}>{msg}</p>
+        <p className={`alert ${action}`}>{msg}</p>
     )
 }
 
