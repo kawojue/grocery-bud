@@ -74,13 +74,29 @@ export const DataProvider = ({ children }) => {
         setName(getItem[0].name)
     }
 
+    const validateName = () => {
+        let bool = false
+        const getNames = items.map(item => item.name)
+
+        getNames.forEach(getName => {
+            if (name.toLowerCase().trim() === getName) {
+                showAlert(true, 'warning', 'Item already exists. Wanna edit?')
+                bool = true
+            } else {
+                bool = false
+            }
+        })
+
+        return bool
+    }
+
     const addItem = async e => {
         e.preventDefault()
-        const formatName = name.toLowerCase()
+        const formatName = name.toLowerCase().trim()
         const getNewID = new Date().getTime()
         const getItem = items.filter(item => item.id === ID)
 
-        if (isEditing) {
+        if (isEditing && !validateName() && name) {
             getItem[0].name = formatName
             // update edited item
             const newItems = items.map(item => item.id === ID ? getItem[0] : item)
@@ -95,10 +111,10 @@ export const DataProvider = ({ children }) => {
                 body: JSON.stringify(getItem[0])
             })
 
-            showAlert(true, 'edit', 'value changed')
+            showAlert(true, 'edit', 'Value changed')
         }
 
-        if (!isEditing) {
+        if (!isEditing && !validateName() && name) {
             const newItem = { id: getNewID, name: formatName } // add item
             setItems([newItem, ...items])
 
@@ -111,7 +127,7 @@ export const DataProvider = ({ children }) => {
                 body: JSON.stringify(newItem)
             })
 
-            showAlert(true, 'add', 'value changed')
+            showAlert(true, 'add', 'Item added')
         }
 
         // Set Default states
