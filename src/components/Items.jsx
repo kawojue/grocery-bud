@@ -21,9 +21,9 @@ const Items = () => {
                     </div>
                 </article>
             ))}
-            <button className="trash-btn" onClick={() => clearItems()}>
+            {items.length !== 0 && <button className="trash-btn" onClick={() => clearItems()}>
                 clear items
-            </button>
+            </button>}
         </section>
     )
 }
