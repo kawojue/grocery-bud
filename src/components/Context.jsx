@@ -74,20 +74,21 @@ export const DataProvider = ({ children }) => {
         setName(getItem[0].name)
     }
 
-    const validateName = () => {
+    const validateName = (name) => {
         let bool = false
-        const getNames = items.map(item => item.name)
-
-        getNames.forEach(getName => {
-            if (name.toLowerCase().trim() === getName) {
-                showAlert(true, 'warning', 'Item already exists. Wanna edit?')
-                bool = true
-            } else {
-                bool = false
-            }
-        })
-
-        return bool
+        const getItem = items.filter(item => item.name.toLowerCase() === name)
+        if (getItem.length === 1) {
+            items.forEach(item => {
+                if (item.name.toLowerCase() === name) {
+                    bool = true
+                } else {
+                    bool = false
+                }
+            })
+            return bool
+        } else {
+            return false
+        }
     }
 
     const addItem = async e => {
@@ -96,7 +97,7 @@ export const DataProvider = ({ children }) => {
         const getNewID = new Date().getTime()
         const getItem = items.filter(item => item.id === ID)
 
-        if (isEditing && !validateName() && name) {
+        if (isEditing && !validateName(formatName) && name) {
             getItem[0].name = formatName
             // update edited item
             const newItems = items.map(item => item.id === ID ? getItem[0] : item)
@@ -114,7 +115,7 @@ export const DataProvider = ({ children }) => {
             showAlert(true, 'edit', 'Value changed')
         }
 
-        if (!isEditing && !validateName() && name) {
+        if (!isEditing && !validateName(formatName) && name) {
             const newItem = { id: getNewID, name: formatName } // add item
             setItems([newItem, ...items])
 
