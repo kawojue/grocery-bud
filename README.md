@@ -8,9 +8,9 @@ $ npm install
 
 $ npm run dev
 
-# Open the Url on your browser
+### Open the Url on your browser
 
-# Open another terminal
+## Open another terminal
 
 $ cd grocery-bud
 
