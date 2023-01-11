@@ -1,15 +1,3 @@
 {
-  "items": [{
-    "id": 1,
-    "name": "yam"
-  }, {
-    "id": 2,
-    "name": "eggs"
-  }, {
-    "id": 3,
-    "name": "noodles"
-  }, {
-    "id": 1668440170659,
-    "name": "Bread"
-  }]
+  "items": []
 }
